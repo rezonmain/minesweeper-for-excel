@@ -1,0 +1,11 @@
+<customUI xmlns="http://schemas.microsoft.com/office/2006/01/customui"> 
+   <ribbon> 
+     <tabs> 
+       <tab id="CustomTab" label="PLAY"> 
+         <group id="startGroup" label="Minesweeper"> 
+           <button id="btnMinesweeper" label="Start Game" imageMso="HappyFace" size="large" onAction="Macros.openMenuForm" /> 
+         </group > 
+       </tab> 
+     </tabs> 
+   </ribbon> 
+ </customUI>
