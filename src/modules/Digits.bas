@@ -38,16 +38,16 @@ Private Sub setDigits(value As Integer, counter As Integer)
         If value < 0 Then
             If value < -99 Then Call helpMe: Exit Sub
             If Len(str) <> 3 Then str = left(str, 1) & "0" & right(str, 1)
-            boardForm.controls("dig3").Picture = Sprite.useSprite("n" & right(str, 1))
-            boardForm.controls("dig2").Picture = Sprite.useSprite("n" & Mid(str, 2, 1))
-            boardForm.controls("dig1").Picture = Sprite.useSprite("minus")
+            boardForm.Controls("dig3").Picture = Sprite.useSprite("n" & right(str, 1))
+            boardForm.Controls("dig2").Picture = Sprite.useSprite("n" & Mid(str, 2, 1))
+            boardForm.Controls("dig1").Picture = Sprite.useSprite("minus")
         Else
             Do While Len(str) < 3
                 str = "0" & str
             Loop
-            boardForm.controls("dig3").Picture = Sprite.useSprite("n" & right(str, 1))
-            boardForm.controls("dig2").Picture = Sprite.useSprite("n" & Mid(str, 2, 1))
-            boardForm.controls("dig1").Picture = Sprite.useSprite("n" & left(str, 1))
+            boardForm.Controls("dig3").Picture = Sprite.useSprite("n" & right(str, 1))
+            boardForm.Controls("dig2").Picture = Sprite.useSprite("n" & Mid(str, 2, 1))
+            boardForm.Controls("dig1").Picture = Sprite.useSprite("n" & left(str, 1))
         End If
     End If
     
@@ -59,14 +59,14 @@ Private Sub setDigits(value As Integer, counter As Integer)
             str = "0" & str
         Loop
         If counter > 999 Then Call helpMe: Exit Sub
-        boardForm.controls("dig6").Picture = Sprite.useSprite("n" & left(str, 1))
-        boardForm.controls("dig5").Picture = Sprite.useSprite("n" & Mid(str, 2, 1))
-        boardForm.controls("dig4").Picture = Sprite.useSprite("n" & right(str, 1))
+        boardForm.Controls("dig6").Picture = Sprite.useSprite("n" & left(str, 1))
+        boardForm.Controls("dig5").Picture = Sprite.useSprite("n" & Mid(str, 2, 1))
+        boardForm.Controls("dig4").Picture = Sprite.useSprite("n" & right(str, 1))
     End If
 End Sub
 
 Private Sub helpMe()
-    boardForm.controls("dig1").Picture = Sprite.useSprite("nh")
-    boardForm.controls("dig2").Picture = Sprite.useSprite("nl")
-    boardForm.controls("dig3").Picture = Sprite.useSprite("np")
+    boardForm.Controls("dig1").Picture = Sprite.useSprite("nh")
+    boardForm.Controls("dig2").Picture = Sprite.useSprite("nl")
+    boardForm.Controls("dig3").Picture = Sprite.useSprite("np")
 End Sub

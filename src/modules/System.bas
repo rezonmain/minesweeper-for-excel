@@ -19,5 +19,11 @@ Private Declare PtrSafe Function GetSystemMetrics32 Lib "User32" _
 
 Public Function width() As Long
     width = GetSystemMetrics32(0) ' width in points
+    
 End Function
+
+Public Function height() As Long
+    height = GetSystemMetrics32(1)
+End Function
+
 

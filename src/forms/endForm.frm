@@ -53,14 +53,14 @@ Private Sub populateForm()
         stat = lastGameStats(i)
         
         ' Don't create a label for the tooltip
-        For j = 0 To UBound(stat) - 1
-            Set lbl = endForm.frmLastGame.controls.add("Forms.label.1")
+        For j = 0 To UBound(stat) - 2
+            Set lbl = endForm.frmLastGame.Controls.add("Forms.label.1")
             With lbl
                 .left = left
                 .top = top
                 .Caption = CStr(stat(j))
-                .width = 130
                 .Font.Size = 10
+                .AutoSize = True
                 If j = 0 Then .ControlTipText = stat(3)
                 
                 ' Alternate colors
@@ -86,7 +86,6 @@ Private Sub populateForm()
         top = top + rowSpacing
     Next i
     endForm.frmLastGame.height = (lastGameStats.Count * rowSpacing) + rowSpacing
-    endForm.height = btnStartGame.height + frmLastGame.height + formOffset
     btnStartGame.top = endForm.frmLastGame.height + 3
     btnExit.top = btnStartGame.top + (btnStartGame.height / 2) + 3
     btnReplay.top = btnStartGame.top
@@ -132,9 +131,10 @@ Private Sub UserForm_Initialize()
     populateForm
     endForm.StartUpPosition = 0
     endForm.top = boardForm.top
-    endForm.left = boardForm.left + boardForm.width - 2
+    endForm.left = boardForm.left + boardForm.width - 10
     ' always keep the from in view
     If (endForm.left + boardForm.width + 2) > System.width * (3 / 4) Then
         endForm.left = boardForm.left - boardForm.width - 15
     End If
+    Utils.sizeForm Me
 End Sub

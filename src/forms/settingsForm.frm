@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} settingsForm 
    Caption         =   "Settings"
-   ClientHeight    =   5175
+   ClientHeight    =   5070
    ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   3345
@@ -63,9 +63,9 @@ Private Sub UserForm_Initialize()
         .btnApply.Enabled = False
         
         Call generateBoard(.spnSize.value, getValue("Theme"))
-        .width = 175.75 + (.spnSize.value * 9) + 6
         .btnSave.Enabled = False
     End With
+    Utils.sizeForm Me
 End Sub
 
 Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
@@ -159,11 +159,7 @@ Private Sub generateBoard(boardSize As Integer, theme As theme)
     settingsForm.width = 175.75 + (boardSize * 9) + 6
     heightLimit = 280.5
     boardHeight = 92 + (boardSize * 9)
-    If boardHeight > heightLimit Then
-        settingsForm.height = boardHeight + 3
-    Else
-        settingsForm.height = heightLimit
-    End If
+    Utils.sizeForm Me
     Application.ScreenUpdating = True
 End Sub
 
@@ -174,11 +170,11 @@ Private Sub addTiles(boardSize As Integer, theme As theme)
     Dim img As Image
     
     Set rs = New Collection
-    left = settingsForm.frmGeneral.width + 12 + 2
+    left = settingsForm.frmGeneral.width + 12 + 3
     top = 67
     For i = 0 To 8
         For j = 0 To 8
-            Set img = settingsForm.controls.add("Forms.Image.1", addr(i, j))
+            Set img = settingsForm.Controls.add("Forms.Image.1", addr(i, j))
             With img
                 .top = top
                 .left = left
@@ -204,7 +200,7 @@ Private Sub addTiles(boardSize As Integer, theme As theme)
             ctrls.add img, img.name
             left = left + boardSize
         Next j
-        left = settingsForm.frmGeneral.width + 12 + 2
+        left = settingsForm.frmGeneral.width + 12 + 3
         top = top + boardSize
     Next i
 End Sub
@@ -218,7 +214,7 @@ Private Sub addBorder(boardSize As Integer, theme As theme)
     left_ = settingsForm.frmGeneral.width + 12
     height_ = 9 * boardSize + 6
     width_ = 9 * boardSize + 6
-    Set img = settingsForm.controls.add("Forms.Image.1", "border")
+    Set img = settingsForm.Controls.add("Forms.Image.1", "border")
     With img
         .top = top_
         .left = left_
@@ -260,7 +256,7 @@ Private Sub addMenuBtn(boardSize As Integer, theme As theme)
     Dim menuBtnSize As Single
     menuBtnSize = boardSize * 1.5
     
-    Set img = settingsForm.frmHeading.controls.add("Forms.Image.1", "btnMenu")
+    Set img = settingsForm.frmHeading.Controls.add("Forms.Image.1", "btnMenu")
     With img
         .top = (settingsForm.frmHeading.height / 2) - (menuBtnSize / 2)
         .left = (settingsForm.frmHeading.width / 2) - (menuBtnSize / 2) - 2.5
@@ -286,7 +282,7 @@ Private Sub addDigits(boardSize As Integer, theme As theme)
     left_ = 2
     
     For i = 1 To 3
-        Set img = settingsForm.frmHeading.controls.add("Forms.Image.1", "dig" & CStr(i))
+        Set img = settingsForm.frmHeading.Controls.add("Forms.Image.1", "dig" & CStr(i))
         With img
             .top = (settingsForm.frmHeading.height / 2) - (height_ / 2)
             .left = left_
@@ -302,7 +298,7 @@ Private Sub addDigits(boardSize As Integer, theme As theme)
     
     left_ = 9 * boardSize - width_ + 1
     For i = 1 To 3
-        Set img = settingsForm.frmHeading.controls.add("Forms.Image.1", "dig" & CStr(i + 3))
+        Set img = settingsForm.frmHeading.Controls.add("Forms.Image.1", "dig" & CStr(i + 3))
             With img
             .top = (settingsForm.frmHeading.height / 2) - (height_ / 2)
             .left = left_
@@ -320,7 +316,7 @@ End Sub
 Private Sub clearBoard()
     Dim img As Variant
     For Each img In ctrls
-        settingsForm.controls.Remove img.name
+        settingsForm.Controls.Remove img.name
         Set img = Nothing
     Next img
 End Sub

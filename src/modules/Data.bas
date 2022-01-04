@@ -22,7 +22,7 @@ Enum DataError
 End Enum
 
 Public Sub writeValue(field As String, value As Variant, Optional newRecord As Variant)
-    ' Save the provided value to field in 'data' worksheet
+    ' Save the provided value to field in DATA_SHEET
     Dim row As Long, valid As DataError
     
     ' Validate the operation

@@ -119,4 +119,39 @@ Public Function getDiffName(diff As Difficulty) As String
     getDiffName = arr(diff)
 End Function
 
+' FIX:? I think boards render differently on different versions of Excel
+Public Sub sizeForm(frm As Object)
+    Dim Y_OFFSET As Integer
+    Dim X_OFFSET As Integer
+    
+    If Application.Version >= 16 Then
+        Y_OFFSET = 30
+        X_OFFSET = 12
+    Else
+        Y_OFFSET = 20
+        X_OFFSET = 4
+    End If
+    
+    Const PADDING As Integer = 6
+    
+    Dim ctl As Control, rmCtrl As Control, bmCtrl As Control
+    Dim rightMost As Single, bottomMost As Single
+
+    ' Get right most and bottom most controls-
+    ' in form
+    For Each ctl In frm.Controls
+        If ctl.Visible Then
+            With ctl
+                If .left + .width > rightMost Then: rightMost = .left + .width
+                If .top + .height > bottomMost Then: bottomMost = .top + .height
+            End With
+        End If
+    Next ctl
+    
+    ' Set width and height according to right most and bottom most
+    frm.width = rightMost + X_OFFSET + PADDING
+    frm.height = bottomMost + Y_OFFSET + PADDING
+End Sub
+
+
 

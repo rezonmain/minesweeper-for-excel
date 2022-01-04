@@ -110,7 +110,7 @@ Public Sub handleWin()
     Next t
     
     ' Remove the transparent image to disable input
-    Call boardForm.controls.Remove("imgTransp")
+    Call boardForm.Controls.Remove("imgTransp")
     Call Menu.setMenuPicture("woke")
     
     ' Handle stats
@@ -140,7 +140,7 @@ NextT:
     Next t
     
     ' Remove the transparent image to disable input
-    Call boardForm.controls.Remove("imgTransp")
+    Call boardForm.Controls.Remove("imgTransp")
     Call Menu.setMenuPicture("oops")
     Call Stats.onLose
     

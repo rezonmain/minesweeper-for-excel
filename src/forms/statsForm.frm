@@ -4,7 +4,7 @@ Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} statsForm
    ClientHeight    =   1650
    ClientLeft      =   45
    ClientTop       =   390
-   ClientWidth     =   4350
+   ClientWidth     =   4320
    OleObjectBlob   =   "statsForm.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -35,7 +35,8 @@ End Sub
 Private Sub UserForm_Initialize()
     ' test if data sheet exists
     getValue ("gamesLost")
-    Call populateForm
+    populateForm
+    Utils.sizeForm Me
 End Sub
 
 Private Sub populateForm()
@@ -65,14 +66,14 @@ Private Sub populateForm()
     For i = 1 To playerRecords.Count
         stat = playerRecords(i)
         
-        For j = 0 To UBound(stat) - 1
-            Set lbl = statsForm.frmRecords.controls.add("Forms.Label.1")
+        For j = 0 To UBound(stat) - 2
+            Set lbl = statsForm.frmRecords.Controls.add("Forms.Label.1")
             With lbl
                 .left = left
                 .top = top
                 .Caption = CStr(stat(j))
-                .width = 120
                 .Font.Size = 10
+                .AutoSize = True
                 If j = 0 Then .ControlTipText = stat(3)
                 
                 ' Alternate colors
@@ -106,14 +107,14 @@ Private Sub populateForm()
         stat = lastGameStats(i)
         
         ' Dont create a label for the tooltip
-        For j = 0 To UBound(stat) - 1
-            Set lbl = statsForm.frmLastGame.controls.add("Forms.label.1")
+        For j = 0 To UBound(stat) - 2
+            Set lbl = statsForm.frmLastGame.Controls.add("Forms.label.1")
             With lbl
                 .left = left
                 .top = top
                 .Caption = CStr(stat(j))
-                .width = 130
                 .Font.Size = 10
+                .AutoSize = True
                 If j = 0 Then .ControlTipText = stat(3)
                 
                 ' Alternate colors
@@ -140,7 +141,6 @@ Private Sub populateForm()
     Next i
     statsForm.frmLastGame.height = (lastGameStats.Count * rowSpacing) + rowSpacing
     btnExit.top = frmRecords.height + frmLastGame.height + btnOffset
-    statsForm.height = frmRecords.height + btnExit.height + frmLastGame.height + formOffset
 End Sub
 
 

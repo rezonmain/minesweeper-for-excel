@@ -1,30 +1,54 @@
 Attribute VB_Name = "Project"
+' Copyright 2021 Alejandro D.
+'
+' Licensed under the Apache License, Version 2.0 (the "License");
+' you may not use this file except in compliance with the License.
+' You may obtain a copy of the License at
+'
+'     http://www.apache.org/licenses/LICENSE-2.0
+'
+' Unless required by applicable law or agreed to in writing, software
+' distributed under the License is distributed on an "AS IS" BASIS,
+' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+' See the License for the specific language governing permissions and
+' limitations under the License.
 Option Explicit
 
 ' Development automatization functions
-Private Sub export()
+Private Sub export(workbookPath As String)
+    Dim wb As Workbook
     Dim module As VBIDE.VBComponent
     Dim path As String
+    Dim fs As FileSystemObject
+    Set wb = Workbooks.Open(workbookPath)
+    Set fs = New FileSystemObject
     
-    For Each module In ThisWorkbook.VBProject.VBComponents
-        path = ActiveWorkbook.path & "\src"
+    For Each module In wb.VBProject.VBComponents
+        path = ThisWorkbook.path & "\src"
         Select Case module.Type
         Case vbext_ct_ClassModule
             path = path & "\classes\" & module.name & ".cls"
+            addLicence module.CodeModule
+            module.export path
         
         Case vbext_ct_StdModule
             path = path & "\modules\" & module.name & ".bas"
+            addLicence module.CodeModule
+            module.export path
         
         Case vbext_ct_MSForm
             path = path & "\forms\" & module.name & ".frm"
+            addLicence module.CodeModule
+            module.export path
             
         Case Else
             GoTo Continue
         End Select
-        module.export path
+        
         
 Continue:
     Next module
+    wb.Save
 End Sub
 
 Private Sub loadAssetsToForm()
@@ -56,8 +80,8 @@ Private Sub loadAssetsToForm()
     Set dir = fs.GetFolder(path)
     
     For Each file_ In dir.Files
-        If Not fs.GetExtensionName(file_.path) = "bmp" Then GoTo Continue
-        Set img = frm.Designer.controls.add("Forms.Image.1", fs.GetBaseName(file_.name), True)
+        If Not (fs.GetExtensionName(file_.path) = "bmp" Or fs.GetExtensionName(file_.path) = "emf") Then GoTo Continue
+        Set img = frm.Designer.Controls.add("Forms.Image.1", fs.GetBaseName(file_.name), True)
         With img
             .Picture = LoadPicture(file_.path)
             .width = 5
@@ -80,13 +104,17 @@ End Sub
 Public Sub build()
     Application.ScreenUpdating = False
     Application.DisplayAlerts = False
-    Call export
-    Call buildExcelFile
-    Call buildAddIn
+    Dim path As String
+    
+    path = buildExcelFile
+    export path
+    removeDevModules path
+    buildAddIn
+    
     MsgBox "Build succesful"
 End Sub
 
-Private Sub buildExcelFile()
+Private Function buildExcelFile() As String
     Dim path As String
     Dim cmp As VBComponent
     Dim sh As Worksheet
@@ -104,10 +132,6 @@ Private Sub buildExcelFile()
     ThisWorkbook.SaveCopyAs path
     Set wb = Workbooks.Open(path)
     With wb
-        ' Remove the project module, not needed in distribution build
-        Set cmp = .VBProject.VBComponents("Project")
-        .VBProject.VBComponents.Remove cmp
-        
         ' Remove the data sheet
         Set sh = .Worksheets(DATA_SHEET)
         If Not sh Is Nothing Then
@@ -120,8 +144,9 @@ Private Sub buildExcelFile()
     'disableAlertsOnSave wb
     wb.Save
     wb.Close
+    buildExcelFile = path
     
-End Sub
+End Function
 
 Private Sub buildAddIn()
     Dim path As String, root As String
@@ -204,6 +229,37 @@ Private Sub disableAlertsOnSave(wb As Workbook)
             i = 4
             .InsertLines i, "Application.DisplayAlerts = False"
         End With
+    End With
+End Sub
+
+Private Sub addLicence(code As VBIDE.CodeModule)
+    Dim fileNum As Integer
+    Dim lin As String, str As String
+    Dim i As Long
+    Const comment As String = "' "
+    i = 1
+    
+    fileNum = FreeFile()
+    Open ThisWorkbook.path & "/LICENCE" For Input As #fileNum
+    
+    While Not EOF(fileNum)
+        Line Input #fileNum, lin
+        With code
+            str = comment & lin
+            .InsertLines i, str
+            i = i + 1
+        End With
+    Wend
+End Sub
+
+Private Sub removeDevModules(path As String)
+    Dim wb As Workbook
+    Dim cmp As VBComponent
+    Set wb = Workbooks.Open(path)
+    With wb
+        ' Remove the project module, not needed in distribution build
+        Set cmp = .VBProject.VBComponents("Project")
+        .VBProject.VBComponents.Remove cmp
     End With
 End Sub
 

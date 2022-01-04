@@ -105,5 +105,6 @@ Private Sub UserForm_Initialize()
     customForm.StartUpPosition = 0
     customForm.top = Application.top + 148
     customForm.left = Application.left + 205
+    Utils.sizeForm Me
 End Sub
 

@@ -15,19 +15,18 @@ Attribute VB_Name = "Init"
 Option Explicit
 
 Public Sub init(game_ As MinesweeperGame)
-    Call Vars.setVars(game_)
-    Call clearNewRecords
-    
-    Call configureBoard
-    Call addBorders
-    Call addTiles
-    Call addImage
-    Call addMenuBtn
-    Call addDigits
+    Vars.setVars game_
+    clearNewRecords
+    configureBoard
+    addBorders
+    addTiles
+    addImage
+    addMenuBtn
+    addDigits
+    Utils.sizeForm boardForm
     boardForm.show
 End Sub
 
-' FIX: BOARD RENDERS DIFFERENTLY IN DIFFERENT VERSIONS OF EXCEL
 Private Sub configureBoard()
     ' Callers: Init.init
     ' Configures form size to accomodate board size
@@ -56,17 +55,6 @@ Private Sub configureBoard()
     If Game.Difficulty = custom Then boardForm.Caption = boardForm.Caption & " - Custom"
     
     If Game.IsReplay Then boardForm.Caption = boardForm.Caption & " - Replay"
-    
-    borderOffsetY = 8 + 21
-    borderOffsetX = 16
-    
-    initialY = 67
-    initialX = 8
-    
-    boardForm.height = initialY + Game.boardY * BTN_SIZE + borderOffsetY
-    boardForm.width = initialX + Game.boardX * BTN_SIZE + borderOffsetX
-    
-    boardForm.BorderStyle = fmBorderStyleNone
 End Sub
 
 Private Sub addBorders()
@@ -79,7 +67,7 @@ Private Sub addBorders()
     left_ = 6
     height_ = Game.boardY * BTN_SIZE + 6
     width_ = Game.boardX * BTN_SIZE + 6
-    Set img = boardForm.controls.add("Forms.Image.1", "imgBb")
+    Set img = boardForm.Controls.add("Forms.Image.1", "imgBb")
     With img
         .top = top_
         .left = left_
@@ -98,13 +86,12 @@ Private Sub addBorders()
         .width = width_
         .SpecialEffect = fmSpecialEffectSunken
         .Caption = ""
-        Select Case Game.Settings.theme
-        Case Default
-            .BackColor = &HE0E0E0
-        Case Dark
-            .BackColor = &H404040
+        .BackColor = &HE0E0E0
+        If Game.Settings.theme = Dark Then
             .SpecialEffect = fmSpecialEffectFlat
-        End Select
+            .BackColor = &H404040
+        End If
+        
     End With
 End Sub
 
@@ -119,12 +106,12 @@ Private Sub addTiles()
     
     ' Tiles starting position in form:
     top_ = 67
-    left_ = 8
+    left_ = 9
     
     For i = 0 To Game.boardY - 1
         For j = 0 To Game.boardX - 1
             Set tile = New MinesweeperTile: tile.address = addr(i, j)
-            Set tile.Image = boardForm.controls.add("Forms.Image.1", addr(i, j))
+            Set tile.Image = boardForm.Controls.add("Forms.Image.1", addr(i, j))
             With tile.Image
                 .height = BTN_SIZE
                 .width = BTN_SIZE
@@ -142,7 +129,7 @@ Private Sub addTiles()
             
         Next j
         top_ = top_ + BTN_SIZE
-        left_ = 8
+        left_ = 9
     Next i
 End Sub
 
@@ -154,7 +141,7 @@ Private Sub addImage()
     
     Dim imgEvents As ImageEvents
     Dim img As MSForms.Image
-    Set img = boardForm.controls.add("Forms.Image.1", "imgTransp")
+    Set img = boardForm.Controls.add("Forms.Image.1", "imgTransp")
     With img
         .top = 67
         .left = 8
@@ -178,9 +165,9 @@ Private Sub addMenuBtn()
     Dim lbl As MSForms.Label
     Dim btnEvents As ButtonEvents
     Dim menuBtnSize As Single
-    menuBtnSize = Vars.BTN_SIZE * 1.5
+    menuBtnSize = Vars.BTN_SIZE * 1.7
     
-    Set img = boardForm.frmHeading.controls.add("Forms.Image.1", "btnMenu")
+    Set img = boardForm.frmHeading.Controls.add("Forms.Image.1", "btnMenu")
     With img
         .top = (boardForm.frmHeading.height / 2) - (menuBtnSize / 2)
         .left = (boardForm.frmHeading.width / 2) - (menuBtnSize / 2) - 2.5
@@ -188,17 +175,7 @@ Private Sub addMenuBtn()
         .height = menuBtnSize
         .Picture = Sprite.useSprite("ok")
         .BorderStyle = fmBorderStyleNone
-        .SpecialEffect = fmSpecialEffectRaised
         .PictureSizeMode = fmPictureSizeModeStretch
-        
-        ' FIX: I think this does nothing
-        Select Case Game.Settings.theme
-        Case Default
-            .BackColor = &HF0F0F0
-            .BorderColor = &HF0F0F0
-        Case Dark
-            .BackColor = &H404040
-        End Select
         
     End With
     Set btnEvents = New ButtonEvents
@@ -206,7 +183,7 @@ Private Sub addMenuBtn()
     Vars.Ev.add btnEvents
     
     ' Create a non-visible button to steal focus from menubtn
-    Set btn = boardForm.controls.add("Forms.CommandButton.1", "btnIStealFocus")
+    Set btn = boardForm.Controls.add("Forms.CommandButton.1", "btnIStealFocus")
     With btn
         .top = 0
         .left = 0
@@ -221,41 +198,67 @@ Private Sub addDigits()
     ' Adds 7 segment counters on board header
     
     Dim img As MSForms.Image
+    Dim fra As MSForms.Frame
+    Dim se As Integer
     Dim width_ As Single, height_ As Single, i As Integer
     Dim left_ As Single
-    height_ = Vars.BTN_SIZE * 1.5
-    width_ = height_ / 1.5
+    height_ = Vars.BTN_SIZE * 1.7
+    width_ = height_ / 1.7
     left_ = 2
-    
-    For i = 1 To 3
-        Set img = boardForm.frmHeading.controls.add("Forms.Image.1", "dig" & CStr(i))
-        With img
-            .top = (boardForm.frmHeading.height / 2) - (height_ / 2)
-            .left = left_
-            .height = height_
-            .width = width_
-            .Picture = Sprite.useSprite("n0")
-            .PictureSizeMode = fmPictureSizeModeStretch
-            .BorderStyle = fmBorderStyleNone
-        End With
-        left_ = left_ + width_
-    Next i
-    
-    left_ = Game.boardX * BTN_SIZE - width_ + 1
-    For i = 1 To 3
-        Set img = boardForm.frmHeading.controls.add("Forms.Image.1", "dig" & CStr(i + 3))
+    Select Case Game.Settings.theme
+        Case Default
+            se = 2
+        Case Dark
+            se = 0
+    End Select
+    Set fra = boardForm.frmHeading.Controls.add("Forms.Frame.1")
+    With fra
+        .top = (boardForm.frmHeading.height / 2) - (height_ / 2) - 1
+        .left = left_ - 1
+        .height = height_ + 3
+        .width = width_ * 3 + 3
+        .Caption = ""
+        .SpecialEffect = se
+        left_ = 0
+        For i = 1 To 3
+            Set img = .Controls.add("Forms.Image.1", "dig" & CStr(i))
             With img
-            .top = (boardForm.frmHeading.height / 2) - (height_ / 2)
-            .left = left_
-            .height = height_
-            .width = width_
-            .Picture = Sprite.useSprite("n0")
-            .PictureSizeMode = fmPictureSizeModeStretch
-            .BorderStyle = fmBorderStyleNone
-        End With
-        left_ = left_ - width_
-    Next i
+                .top = 0
+                .left = left_
+                .height = height_
+                .width = width_
+                .Picture = Sprite.useSprite("n0")
+                .PictureSizeMode = fmPictureSizeModeStretch
+                .BorderStyle = fmBorderStyleNone
+            End With
+            left_ = left_ + width_
+        Next i
+    End With
     
+    left_ = Game.boardX * BTN_SIZE - (width_ * 3) - 1
+    Set fra = boardForm.frmHeading.Controls.add("Forms.Frame.1")
+    With fra
+        .top = (boardForm.frmHeading.height / 2) - (height_ / 2) - 1
+        .left = left_ + 1
+        .height = height_ + 3
+        .width = width_ * 3 + 3
+        .Caption = ""
+        .SpecialEffect = se
+        left_ = width_ * 2
+        For i = 1 To 3
+            Set img = .Controls.add("Forms.Image.1", "dig" & CStr(i + 3))
+                With img
+                .top = 0
+                .left = left_
+                .height = height_
+                .width = width_
+                .Picture = Sprite.useSprite("n0")
+                .PictureSizeMode = fmPictureSizeModeStretch
+                .BorderStyle = fmBorderStyleNone
+            End With
+            left_ = left_ - width_
+        Next i
+    End With
     Call Digits.setFlagCounter(Game.numberOfMines)
 End Sub
 

@@ -57,4 +57,6 @@ Private Sub btnSettings_Click()
     Macros.openSettingsForm
 End Sub
 
-
+Private Sub UserForm_Initialize()
+    Utils.sizeForm Me
+End Sub

@@ -50,7 +50,7 @@ Public Sub expert_()
 End Sub
 
 Public Sub openMenuForm(ribbonButton As IRibbonControl)
-    menuForm.show
+    menuForm.show vbModeless
 End Sub
 
 Public Sub openCustomForm()

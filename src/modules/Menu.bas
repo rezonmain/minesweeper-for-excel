@@ -13,5 +13,5 @@ Attribute VB_Name = "Menu"
 ' See the License for the specific language governing permissions and
 ' limitations under the License.
 Public Sub setMenuPicture(name As String)
-    boardForm.controls("btnMenu").Picture = Sprite.useSprite(name)
+    boardForm.Controls("btnMenu").Picture = Sprite.useSprite(name)
 End Sub

@@ -19,14 +19,14 @@ Public Function useSprite(name As String) As Object
     ' picture property of the Image control for the tiles
     
     Dim themeStr As String
-    Select Case Game.Settings.theme
+    Select Case getValue("Theme")
     Case Default
         themeStr = "def"
     Case Dark
         themeStr = "drk"
     End Select
     
-    Set useSprite = assetsForm.controls(themeStr & name).Picture
+    Set useSprite = assetsForm.Controls(themeStr & name).Picture
 End Function
 
 Public Function settingsSprite(name As String, theme As theme) As Object
@@ -39,7 +39,7 @@ Public Function settingsSprite(name As String, theme As theme) As Object
         themeStr = "drk"
     End Select
     
-    Set settingsSprite = assetsForm.controls(themeStr & name).Picture
+    Set settingsSprite = assetsForm.Controls(themeStr & name).Picture
 End Function
 
 Public Function useSprite_(name As String) As Object
