@@ -114,7 +114,7 @@ Public Sub handleWin()
     Call Menu.setMenuPicture("woke")
     
     ' Handle stats
-    Call stats.onWin
+    Call Stats.onWin
     
     If Game.Settings.ShowStatsOnGameEnd Then
         endForm.Caption = "Win"
@@ -142,7 +142,7 @@ NextT:
     ' Remove the transparent image to disable input
     Call boardForm.controls.Remove("imgTransp")
     Call Menu.setMenuPicture("oops")
-    Call stats.onLose
+    Call Stats.onLose
     
     ' Set endForm caption
     If Game.Settings.ShowStatsOnGameEnd Then

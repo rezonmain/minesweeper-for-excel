@@ -41,7 +41,7 @@ Private Difficulty_ As Difficulty
 Private IsReplay_ As Boolean
 Private Mines_ As Collection
 
-Public stats As MinesweeperStats
+Public Stats As MinesweeperStats
 Public Settings As MinesweeperSettings
 
 Public Property Get numberOfMines() As Integer
@@ -134,7 +134,7 @@ End Property
 
 Private Sub Class_Initialize()
     Set Tiles_ = New Collection
-    Set stats = New MinesweeperStats
+    Set Stats = New MinesweeperStats
     Set Settings = New MinesweeperSettings
     Set Mines_ = New Collection
     FirstClick_ = False

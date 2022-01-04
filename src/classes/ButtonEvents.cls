@@ -23,6 +23,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Public WithEvents btn As MSForms.Image
+Attribute btn.VB_VarHelpID = -1
 
 Private Sub btn_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     btn.SpecialEffect = fmSpecialEffectSunken

@@ -26,13 +26,13 @@ Public WithEvents img As MSForms.Image
 Attribute img.VB_VarHelpID = -1
 
 Private Sub img_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    Call events.handleMouseDown(Button)
+    Call Events.handleMouseDown(Button)
 End Sub
 
 Private Sub img_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    Call events.handleMouseMove(X, Y, Button)
+    Call Events.handleMouseMove(X, Y, Button)
 End Sub
 
 Private Sub img_MouseUp(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    Call events.handleMouseUp(Button)
+    Call Events.handleMouseUp(Button)
 End Sub

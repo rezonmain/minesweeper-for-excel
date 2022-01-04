@@ -260,5 +260,5 @@ Private Sub addDigits()
 End Sub
 
 Private Sub clearNewRecords()
-    stats.getNewRecords
+    Stats.getNewRecords
 End Sub

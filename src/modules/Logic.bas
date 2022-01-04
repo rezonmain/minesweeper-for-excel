@@ -56,7 +56,7 @@ Public Sub tileLeftMouseUp(tile As MinesweeperTile)
             Call Board.setTilesProperties(tile.address)
         End If
         
-        Game.stats.BBBV = stats.get3BV
+        Game.Stats.BBBV = Stats.get3BV
         Time.startTimer
         
         Game.FirstClick = True
@@ -78,7 +78,7 @@ Public Sub tileLeftMouseUp(tile As MinesweeperTile)
     Select Case tile.state
     Case Hidden
         ' If player hits mine
-        stats.ilefts (True)
+        Stats.ilefts (True)
         If tile.mine Then
             tile.Image.Picture = Sprite.useSprite("end")
             tile.state = Revealed
@@ -122,7 +122,7 @@ Public Sub tileRightMouseDown(tile As MinesweeperTile)
         tile.Image.Picture = Sprite.useSprite("flag")
         Game.NumberOfFlags = Game.NumberOfFlags + 1
         Call Digits.setFlagCounter(Game.numberOfMines - Game.NumberOfFlags)
-        If tile.mine Then stats.irights (True)
+        If tile.mine Then Stats.irights (True)
     Case Revealed
         Exit Sub
     Case Flagged
@@ -131,7 +131,7 @@ Public Sub tileRightMouseDown(tile As MinesweeperTile)
         Game.NumberOfFlags = Game.NumberOfFlags - 1
         Call Digits.setFlagCounter(Game.numberOfMines - Game.NumberOfFlags)
     End Select
-    stats.irights
+    Stats.irights
 End Sub
 
 Public Sub tileMouseDownChange(active As MinesweeperTile, old As MinesweeperTile)

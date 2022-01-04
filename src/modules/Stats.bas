@@ -20,34 +20,34 @@ Public Function setRecords()
     Set setRecords = New Dictionary
     Select Case Game.Difficulty
     Case 0
-        If Game.stats.Time < Int(Data.getValue("beginnerTime")) Then
-            Call Data.writeValue("beginnerTime", Game.stats.Time, True)
-            Call Data.writeValue("lastGameTime", Game.stats.Time, True)
+        If Game.Stats.Time < Int(Data.getValue("beginnerTime")) Then
+            Call Data.writeValue("beginnerTime", Game.Stats.Time, True)
+            Call Data.writeValue("lastGameTime", Game.Stats.Time, True)
         End If
         
-        If Game.stats.BBBVS > Data.getValue("beginner3BV/s") Then
-            Call writeValue("beginner3BV/s", Game.stats.BBBVS, True)
-            Call Data.writeValue("lastGame3BV/s", Game.stats.Time, True)
+        If Game.Stats.BBBVS > Data.getValue("beginner3BV/s") Then
+            Call writeValue("beginner3BV/s", Game.Stats.BBBVS, True)
+            Call Data.writeValue("lastGame3BV/s", Game.Stats.Time, True)
         End If
     Case 1
-        If Game.stats.Time < Int(Data.getValue("intermediateTime")) Then
-            Call Data.writeValue("intermediateTime", Game.stats.Time, True)
-            Call Data.writeValue("lastGameTime", Game.stats.Time, True)
+        If Game.Stats.Time < Int(Data.getValue("intermediateTime")) Then
+            Call Data.writeValue("intermediateTime", Game.Stats.Time, True)
+            Call Data.writeValue("lastGameTime", Game.Stats.Time, True)
         End If
         
-        If Game.stats.BBBVS > Data.getValue("intermediate3BV/s") Then
-            Call writeValue("intermediate3BV/s", Game.stats.BBBVS, True)
-            Call Data.writeValue("lastGame3BV/s", Game.stats.Time, True)
+        If Game.Stats.BBBVS > Data.getValue("intermediate3BV/s") Then
+            Call writeValue("intermediate3BV/s", Game.Stats.BBBVS, True)
+            Call Data.writeValue("lastGame3BV/s", Game.Stats.Time, True)
         End If
     Case 2
-        If Game.stats.Time < Int(Data.getValue("expertTime")) Then
-            Call Data.writeValue("expertTime", Game.stats.Time, True)
-            Call Data.writeValue("lastGameTime", Game.stats.Time, True)
+        If Game.Stats.Time < Int(Data.getValue("expertTime")) Then
+            Call Data.writeValue("expertTime", Game.Stats.Time, True)
+            Call Data.writeValue("lastGameTime", Game.Stats.Time, True)
         End If
         
-        If Game.stats.BBBVS > Data.getValue("expert3BV/s") Then
-            Call writeValue("expert3BV/s", Game.stats.BBBVS, True)
-            Call Data.writeValue("lastGame3BV/s", Game.stats.Time, True)
+        If Game.Stats.BBBVS > Data.getValue("expert3BV/s") Then
+            Call writeValue("expert3BV/s", Game.Stats.BBBVS, True)
+            Call Data.writeValue("lastGame3BV/s", Game.Stats.Time, True)
         End If
     End Select
 End Function
@@ -67,23 +67,23 @@ End Function
 
 Public Sub onLose()
     setTimeStat
-    Game.stats.CompletedBBBV = getCompleted3BV
-    If Not Game.stats.Time = 0 Then
-        Game.stats.BBBVS = Game.stats.BBBV / Game.stats.Time
+    Game.Stats.CompletedBBBV = getCompleted3BV
+    If Not Game.Stats.Time = 0 Then
+        Game.Stats.BBBVS = Game.Stats.BBBV / Game.Stats.Time
     Else
-        Game.stats.BBBVS = 0
+        Game.Stats.BBBVS = 0
     End If
     
-    Game.stats.setPropertiesDict
+    Game.Stats.setPropertiesDict
     incrementLose
     writeLastGameStats
 End Sub
 
 Public Sub onWin()
     setTimeStat
-    Game.stats.CompletedBBBV = getCompleted3BV
-    Game.stats.BBBVS = Game.stats.BBBV / Game.stats.Time
-    Game.stats.setPropertiesDict
+    Game.Stats.CompletedBBBV = getCompleted3BV
+    Game.Stats.BBBVS = Game.Stats.BBBV / Game.Stats.Time
+    Game.Stats.setPropertiesDict
     incrementWin
     setRecords
     writeLastGameStats
@@ -98,22 +98,22 @@ Private Sub incrementLose()
 End Sub
 
 Public Sub ichords(Optional effective As Boolean)
-    If effective Then Game.stats.EffectiveChords = Game.stats.EffectiveChords + 1: Exit Sub
-    Game.stats.Chords = Game.stats.Chords + 1
+    If effective Then Game.Stats.EffectiveChords = Game.Stats.EffectiveChords + 1: Exit Sub
+    Game.Stats.Chords = Game.Stats.Chords + 1
 End Sub
 
 Public Sub ilefts(Optional effective As Boolean)
-    If effective Then Game.stats.EffectiveLeftClicks = Game.stats.EffectiveLeftClicks + 1
-    Game.stats.LeftClicks = Game.stats.LeftClicks + 1
+    If effective Then Game.Stats.EffectiveLeftClicks = Game.Stats.EffectiveLeftClicks + 1
+    Game.Stats.LeftClicks = Game.Stats.LeftClicks + 1
 End Sub
 
 Public Sub irights(Optional effective As Boolean)
-    If effective Then Game.stats.EffectiveRightClicks = Game.stats.EffectiveRightClicks + 1: Exit Sub
-    Game.stats.RightClicks = Game.stats.RightClicks + 1
+    If effective Then Game.Stats.EffectiveRightClicks = Game.Stats.EffectiveRightClicks + 1: Exit Sub
+    Game.Stats.RightClicks = Game.Stats.RightClicks + 1
 End Sub
 
 Private Sub setTimeStat()
-    Game.stats.Time = Time.getStatSeconds
+    Game.Stats.Time = Time.getStatSeconds
 End Sub
 
 Public Function get3BV() As Integer
@@ -152,13 +152,13 @@ Continue:
 End Function
 
 Public Function getCompleted3BV() As Integer
-    getCompleted3BV = Game.stats.BBBV - get3BV
+    getCompleted3BV = Game.Stats.BBBV - get3BV
 End Function
 
 Public Sub writeLastGameStats()
     Dim stat As Variant
-    For Each stat In Game.stats.Properties
-        writeValue "lastGame" & stat, Game.stats.Properties(stat)
+    For Each stat In Game.Stats.Properties
+        writeValue "lastGame" & stat, Game.Stats.Properties(stat)
     Next stat
 End Sub
 

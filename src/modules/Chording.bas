@@ -17,7 +17,7 @@ Option Explicit
 Public Sub startChording(tile As MinesweeperTile)
     ' Visually show/set the adjacent tiles
     Call Adjacent.setAdjacentTiles(tile)
-    stats.ichords
+    Stats.ichords
 End Sub
 
 Public Sub endChording(tile As MinesweeperTile)
@@ -43,7 +43,7 @@ Public Sub endChording(tile As MinesweeperTile)
                 effectiveChord = True
                 t.state = Revealed
                 Call Adjacent.floodFill(t, Game.tiles, isZero(t))
-                If Utils.testWin Then Call Game.end_(1, tile): stats.ichords (True): Exit Sub
+                If Utils.testWin Then Call Game.end_(1, tile): Stats.ichords (True): Exit Sub
             End If
         Next t
         
@@ -51,7 +51,7 @@ Public Sub endChording(tile As MinesweeperTile)
         ' Otherwise just complete the "animation"
         Call Adjacent.unsetAdjacentTiles(tile)
     End If
-    If effectiveChord Then stats.ichords (True): effectiveChord = False
+    If effectiveChord Then Stats.ichords (True): effectiveChord = False
 End Sub
 
 Public Sub moveChording(active As MinesweeperTile, old As MinesweeperTile)

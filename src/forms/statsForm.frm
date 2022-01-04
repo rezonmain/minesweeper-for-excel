@@ -57,7 +57,7 @@ Private Sub populateForm()
     Set playerRecords = getPlayerRecords
     Set lastGameStats = getLastGameStats
     
-    Set records = stats.getNewRecords
+    Set records = Stats.getNewRecords
     
     top = 5
     left = 2
