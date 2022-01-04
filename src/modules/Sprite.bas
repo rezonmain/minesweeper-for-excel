@@ -42,6 +42,10 @@ Public Function settingsSprite(name As String, theme As theme) As Object
     Set settingsSprite = assetsForm.Controls(themeStr & name).Picture
 End Function
 
+Public Function useThisSprite(name As String) As Object
+    Set useThisSprite = assetsForm.Controls(name).Picture
+End Function
+
 Public Function useSprite_(name As String) As Object
     ' Returns a picture object used for setting the -
     ' picture property of the Image control for the tiles

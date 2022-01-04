@@ -24,7 +24,7 @@ Public Sub init(game_ As MinesweeperGame)
     addMenuBtn
     addDigits
     Utils.sizeForm boardForm
-    boardForm.show
+    boardForm.Show
 End Sub
 
 Private Sub configureBoard()

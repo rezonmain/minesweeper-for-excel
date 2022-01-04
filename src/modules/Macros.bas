@@ -50,19 +50,19 @@ Public Sub expert_()
 End Sub
 
 Public Sub openMenuForm(ribbonButton As IRibbonControl)
-    menuForm.show vbModeless
+    menuForm.Show vbModeless
 End Sub
 
 Public Sub openCustomForm()
-    customForm.show
+    customForm.Show
 End Sub
 
 Public Sub openStatsForm()
-    statsForm.show
+    statsForm.Show
 End Sub
 
 Public Sub openSettingsForm()
-    settingsForm.show
+    settingsForm.Show
 End Sub
 
 Public Sub exitWorkbook()

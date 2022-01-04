@@ -57,6 +57,17 @@ Private Sub btnSettings_Click()
     Macros.openSettingsForm
 End Sub
 
+Private Sub imgEmoji_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+    imgEmoji.SpecialEffect = fmSpecialEffectSunken
+    imgEmoji.Picture = Sprite.useThisSprite("defwow")
+End Sub
+
+Private Sub imgEmoji_MouseUp(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+    MsgBox "Created by rezonmain"
+    imgEmoji.SpecialEffect = fmSpecialEffectFlat
+    imgEmoji.Picture = Sprite.useThisSprite("defok")
+End Sub
+
 Private Sub UserForm_Initialize()
-    Utils.sizeForm Me
+    imgEmoji.Picture = Sprite.useThisSprite("defok")
 End Sub

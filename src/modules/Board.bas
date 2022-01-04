@@ -118,7 +118,7 @@ Public Sub handleWin()
     
     If Game.Settings.ShowStatsOnGameEnd Then
         endForm.Caption = "Win"
-        endForm.show
+        endForm.Show
     End If
 End Sub
 
@@ -147,7 +147,7 @@ NextT:
     ' Set endForm caption
     If Game.Settings.ShowStatsOnGameEnd Then
         endForm.Caption = "Lose"
-        endForm.show
+        endForm.Show
     End If
 End Sub
 
