@@ -12,6 +12,19 @@ Attribute VB_Name = "Project"
 ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ' See the License for the specific language governing permissions and
 ' limitations under the License.
+' Copyright 2021 Alejandro D.
+'
+' Licensed under the Apache License, Version 2.0 (the "License");
+' you may not use this file except in compliance with the License.
+' You may obtain a copy of the License at
+'
+'     http://www.apache.org/licenses/LICENSE-2.0
+'
+' Unless required by applicable law or agreed to in writing, software
+' distributed under the License is distributed on an "AS IS" BASIS,
+' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+' See the License for the specific language governing permissions and
+' limitations under the License.
 Option Explicit
 
 ' Development automatization functions
@@ -133,15 +146,11 @@ Private Function buildExcelFile() As String
     Set wb = Workbooks.Open(path)
     With wb
         ' Remove the data sheet
-        Set sh = .Worksheets(DATA_SHEET)
-        If Not sh Is Nothing Then
+        If Utils.isSheet(DATA_SHEET) Then
+            Set sh = .Worksheets(DATA_SHEET)
             sh.Delete
-            
         End If
-        'wb.RemoveDocumentInformation xlRDIAll
-        'wb.RemovePersonalInformation = True
     End With
-    'disableAlertsOnSave wb
     wb.Save
     wb.Close
     buildExcelFile = path
@@ -261,7 +270,7 @@ Private Sub removeDevModules(path As String)
         Set cmp = .VBProject.VBComponents("Project")
         .VBProject.VBComponents.Remove cmp
     End With
-    wb.Save
+    wb.Save 1
     wb.Close
 End Sub
 
