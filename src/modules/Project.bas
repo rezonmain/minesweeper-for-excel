@@ -261,6 +261,8 @@ Private Sub removeDevModules(path As String)
         Set cmp = .VBProject.VBComponents("Project")
         .VBProject.VBComponents.Remove cmp
     End With
+    wb.Save
+    wb.Close
 End Sub
 
 
