@@ -1,5 +1,5 @@
 Attribute VB_Name = "Project"
-' Copyright 2021 Alejandro D.
+' Copyright 2022 Alejandro D.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License");
 ' you may not use this file except in compliance with the License.
@@ -133,15 +133,11 @@ Private Function buildExcelFile() As String
     Set wb = Workbooks.Open(path)
     With wb
         ' Remove the data sheet
-        Set sh = .Worksheets(DATA_SHEET)
-        If Not sh Is Nothing Then
+        If Utils.isSheet(DATA_SHEET) Then
+            Set sh = .Worksheets(DATA_SHEET)
             sh.Delete
-            
         End If
-        'wb.RemoveDocumentInformation xlRDIAll
-        'wb.RemovePersonalInformation = True
     End With
-    'disableAlertsOnSave wb
     wb.Save
     wb.Close
     buildExcelFile = path

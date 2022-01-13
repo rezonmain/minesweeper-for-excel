@@ -13,7 +13,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-' Copyright 2021 Alejandro D.
+' Copyright 2022 Alejandro D.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License");
 ' you may not use this file except in compliance with the License.
@@ -26,6 +26,8 @@ Attribute VB_Exposed = False
 ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ' See the License for the specific language governing permissions and
 ' limitations under the License.
+Option Explicit
+
 Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
     Utils.cleanUp
 End Sub

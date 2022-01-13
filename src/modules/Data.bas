@@ -1,5 +1,5 @@
 Attribute VB_Name = "Data"
-' Copyright 2021 Alejandro D.
+' Copyright 2022 Alejandro D.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License");
 ' you may not use this file except in compliance with the License.
@@ -89,7 +89,7 @@ Private Function validateOperation(field As String, row As Long) As DataError
     Dim res As Variant
     
     ' If no DATA_SHEET is found
-    If Not isSheet(DATA_SHEET) Then
+    If Not Utils.isSheet(DATA_SHEET) Then
         validateOperation = NO_DATA_SHEET
         Exit Function
     End If
@@ -135,15 +135,6 @@ Public Sub clearAllData()
     Data.writeDefualtSettings
     Data.clearStats
 End Sub
-
-Private Function isSheet(sheet As String) As Boolean
-    ' Returns true if sheet with name "sheet" exists
-    
-    Dim sh As Worksheet
-    For Each sh In ThisWorkbook.Sheets
-        If sh.name = sheet Then isSheet = True: Exit Function
-    Next sh
-End Function
 
 Private Function useDefault(field As String) As Variant
     ' Returns the default value of the provided field

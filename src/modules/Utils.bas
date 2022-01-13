@@ -1,5 +1,5 @@
 Attribute VB_Name = "Utils"
-' Copyright 2021 Alejandro D.
+' Copyright 2022 Alejandro D.
 '
 ' Licensed under the Apache License, Version 2.0 (the "License");
 ' you may not use this file except in compliance with the License.
@@ -153,5 +153,11 @@ Public Sub sizeForm(frm As Object)
     frm.height = bottomMost + Y_OFFSET + PADDING
 End Sub
 
-
-
+Public Function isSheet(sheet As String) As Boolean
+    ' Returns true if sheet with name "sheet" exists
+    
+    Dim sh As Worksheet
+    For Each sh In ThisWorkbook.Sheets
+        If sh.name = sheet Then isSheet = True: Exit Function
+    Next sh
+End Function
